@@ -24,4 +24,9 @@ dispatch_sync 表示是一个同步线程
 
 dispatch_async 表示一个异步线程
 
-dispatch_get_main_queue 表示运行在主线程中的主队列
+// 全局队列，一个特殊的并行队列
+dispatch_get_global_queue
+
+// 主队列，在主线程中运行，因为主线程只有一个，所以这是一个特殊的串行队列
+dispatch_get_main_queue
+
