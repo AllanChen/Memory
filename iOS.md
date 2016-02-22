@@ -2,11 +2,11 @@
 # iOS GCD 名词解析:
 
 
-//表示是一个同步线程  
-dispatch_sync
+    //表示是一个同步线程  
+    dispatch_sync
 
-//表示一个异步线程  
-dispatch_async
+    //表示一个异步线程  
+    dispatch_async
 
 ---
 
@@ -21,21 +21,21 @@ dispatch_async
 
 并发队列：可以同时调度多个任务
 
-Serial Dispatch Queue，这叫做串行队列
+    Serial Dispatch Queue，这叫做串行队列
 
-Concurrent Dispatch Queue，叫做并行队列
+    Concurrent Dispatch Queue，叫做并行队列
 
-// 全局队列，一个特殊的并行队列  
-dispatch_get_global_queue
+    // 全局队列，一个特殊的并行队列  
+    dispatch_get_global_queue
 
-// 主队列，在主线程中运行，因为主线程只有一个，所以这是一个特殊的串行队列
-dispatch_get_main_queue
+    // 主队列，在主线程中运行，因为主线程只有一个，所以这是一个特殊的串行队列
+    dispatch_get_main_queue
 
-// 从DISPATCH_QUEUE_SERIAL看出，这是串行队列
-dispatch_queue_create("com.demo.serialQueue", DISPATCH_QUEUE_SERIAL)
+    // 从DISPATCH_QUEUE_SERIAL看出，这是串行队列
+    dispatch_queue_create("com.demo.serialQueue", DISPATCH_QUEUE_SERIAL)
 
-// 同理，这是一个并行队列  
-dispatch_queue_create("com.demo.concurrentQueue", DISPATCH_QUEUE_CONCURRENT)
+    // 同理，这是一个并行队列  
+    dispatch_queue_create("com.demo.concurrentQueue", DISPATCH_QUEUE_CONCURRENT)
 
 
 ---
@@ -43,6 +43,10 @@ dispatch_queue_create("com.demo.concurrentQueue", DISPATCH_QUEUE_CONCURRENT)
 
 ### 线程延迟执行
 
+dispatch_time_t  
+延迟时间创建
+
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)); // 1 
 
 
 
