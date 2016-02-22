@@ -21,5 +21,7 @@ Concurrent Dispatch Queue，叫做并行队列
 **串行与并行针对的是队列，而同步与异步，针对的则是线程。** 
 
 dispatch_sync 表示是一个同步线程
+
 dispatch_async 表示一个异步线程
+
 dispatch_get_main_queue 表示运行在主线程中的主队列
