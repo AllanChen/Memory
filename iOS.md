@@ -23,7 +23,6 @@ description: 要理解 GCD ，你要先熟悉与线程和并发相关的几个�
 dispatch_sync(..., ^(block)) // 同步线程
 dispatch_async(..., ^(block)) // 异步线程
 
-Serial Dispatch Queue，这叫做串行队列
 
 Concurrent Dispatch Queue，叫做并行队列
 
