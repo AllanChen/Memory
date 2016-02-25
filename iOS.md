@@ -23,6 +23,7 @@ description: 要理解 GCD ，你要先熟悉与线程和并发相关的几个�
 dispatch_sync(..., ^(block)) // 同步线程
 dispatch_async(..., ^(block)) // 异步线程
 
+Serial Dispatch Queue，这叫做串行队列
 
 Concurrent Dispatch Queue，叫做并行队列
 
@@ -59,7 +60,7 @@ Dispatch Group 会在整个组的任务都完成时通知你。这些任务可�
 
 就是一段代码不能被并发执行，也就是，两个线程不能同时执行这段代码。这很常见，因为代码去操作一个共享资源，例如一个变量若能被并发进程访问，那么它很可能会变质（译者注：它的值不再可信）。
 
-### Concurrency vs Parallelism 并发与并行
+### Concurrency vs Parallelism 并发与并行 
 
 并发和并行通常被一起提到，所以值得花些时间解释它们之间的区别。
 
@@ -70,6 +71,31 @@ Dispatch Group 会在整个组的任务都完成时通知你。这些任务可�
 虽然你可以编写代码在 GCD 下并发执行，但 GCD 会决定有多少并行的需求。并行要求并发，但并发并不能保证并行。
 
 更深入的观点是并发实际上是关于构造。当你在脑海中用 GCD 编写代码，你组织你的代码来暴露能同时运行的多个工作片段，以及不能同时运行的那些。如果你想深入此主题，看看 [这个由Rob Pike做的精彩的讲座 。](http://vimeo.com/49718712)
+
+### Dispatch Groups（调度组）
+
+Dispatch Group 会在整个组的任务都完成时通知你。这些任务可以是同步的，也可以是异步的，即便在不同的队列也行。而且在整个组的任务都完成时，Dispatch Group 可以用同步的或者异步的方式通知你。因为要监控的任务在不同队列，那就用一个 ***dispatch_group_t*** 的实例来记下这些不同的任务。
+
+#### Dispatch Groups Sample:
+<pre class="prettyprint">
+dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0); 
+dispatch_group_t group = dispatch_group_create(); 
+dispatch_group_async(group, queue, ^{ 
+    [NSThread sleepForTimeInterval:1]; 
+    NSLog(@"group1"); 
+}); 
+dispatch_group_async(group, queue, ^{ 
+    [NSThread sleepForTimeInterval:2]; 
+    NSLog(@"group2"); 
+}); 
+dispatch_group_async(group, queue, ^{ 
+    [NSThread sleepForTimeInterval:3]; 
+    NSLog(@"group3"); 
+}); 
+dispatch_group_notify(group, dispatch_get_main_queue(), ^{ 
+    NSLog(@"updateUi"); 
+});
+</pre>
 
 ## 例子
 
